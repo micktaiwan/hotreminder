@@ -1,4 +1,4 @@
-hotreminder
+HotReminder
 ===========
 
 Constat:
@@ -20,3 +20,4 @@ Fonctionalités
 - pouvoir copier coller un mail
 - forum, ou en tout cas la possibilité de commenter un sujet
 
+Le nom: c'est des reminders et ils sont hot. On se prend pas la tête chez nous.
