@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('hotreminderApp', [
-    'hotreminderApp.services.notification'
+    'hotreminderApp.services.notification',
+    'hotreminderApp.services.db'
     ])
   .config(function ($routeProvider) {
     $routeProvider
