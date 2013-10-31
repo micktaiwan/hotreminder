@@ -1,0 +1,11 @@
+<form role="form" class="well" ng-submit="addNotification()">
+    <a ng-click="enableNotifications()" class="btn btn-danger btn-block">
+        Enable Notifications
+    </a>
+    <hr>
+    <div class="form-group">
+        <label for="notification">Broadcast Notification</label>
+        <textarea class="form-control" ng-model="notification" id="notification" placeholder="Enter notification text here"></textarea>
+    </div>
+    <button type="submit" class="btn btn-success btn-block">Submit</button>
+</form>

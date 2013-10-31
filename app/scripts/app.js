@@ -9,6 +9,10 @@ angular.module('hotreminderApp', [
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
+      .when('/notification_test', {
+        templateUrl: 'views/notification_test.html',
+        controller: 'NotificationTestCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
