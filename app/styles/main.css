@@ -27,7 +27,11 @@ body {
 }
 
 .author {
-  display: inline;
+  padding: 10px 0px 10px 0;
   color:#888;
   font-style: italic;
+}
+
+.link {
+  cursor: pointer;
 }

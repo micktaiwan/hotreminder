@@ -1,4 +1,23 @@
-<h1>New reminders</h1>
+<div class="list-group"  ng-repeat="s in subjects">
+  <div class="list-group-item">
+    <h4 class="list-group-item-heading link" ng-click="s.show = !s.show" ng-init="s.show=false"><div class="subject">{{s.subject}}</div></h4>
+    <div class="list-group-item-text" ng-class="{true: '', false: 'hidden'}[s.show]">
+    {{s.content}}
+	    <div class="author">{{s.author}}</div>
+		<div class="btn-group">
+		  <button type="button" class="btn btn-success">OK</button>
+		  <button type="button" class="btn btn-warning">What ?</button>
+		  <button type="button" class="btn btn-danger">Bullshit</button>
+		</div>
+    </div>
+  </div>
+
+
+</div>
+
+
+
+<h1>Todo</h1>
 <ul>
-  <li ng-repeat="s in subjects"><div class="subject">{{s.subject}}</div> <div class="author">{{s.author}}</div></li>
+  <li ng-repeat="s in todo"><div class="subject">{{s.subject}}</div> <div class="author">{{s.author}}</div></li>
 </ul>
