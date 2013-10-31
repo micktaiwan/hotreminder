@@ -35,3 +35,4 @@ body {
 .list-group-item-text { color: #FFF;}
 .list-group-item { background-color: #EEE;}
 .link { cursor: pointer; }
+.navbar-inverse .navbar-brand { color: #FA0; }
