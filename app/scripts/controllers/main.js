@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('hotreminderApp')
+
   .controller('MainCtrl', function ($scope, Notification) {
     $scope.subjects = [
       {show:false, subject: 'Script pour recharger la base', author: 'Franck L.', content:'Blabla\nJe teste\nComment je converti les retours à la ligne ?', states: [{user_id_1: {state:'new'}}]},
@@ -12,6 +13,7 @@ angular.module('hotreminderApp')
       {subject: 'Firebase :)', author: 'Mickael'}
     ];
 
+
     $scope.enableNotifications = function() {
         Notification.enableNotifications();
     };
@@ -20,4 +22,4 @@ angular.module('hotreminderApp')
         Notification.addNotifications(Notification.types.WARNING, this.notification);
     };
 
-  });
+    });
