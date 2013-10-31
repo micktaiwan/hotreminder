@@ -1,3 +1,15 @@
+<form role="form" class="well" ng-submit="addNotification()">
+    <a ng-click="enableNotifications()" class="btn btn-danger btn-block">
+        Enable Notifications
+    </a>
+    <hr>
+    <div class="form-group">
+        <label for="notification">Broadcast Notification</label>
+        <textarea class="form-control" ng-model="notification" id="notification" placeholder="Enter notification text here"></textarea>
+    </div>
+    <button type="submit" class="btn btn-success btn-block">Submit</button>
+</form>
+
 <h2><span class="label label-danger">New</span></h2>
 <div class="list-group"  ng-repeat="s in subjects | filter:states.user_id_1.state='new'" ng-include="'views/_subject.html'"></div>
 <h2><span class="label label-warning">What?</span></h2>
@@ -23,3 +35,4 @@
     window.webkitNotifications.requestPermission();
   }*/
 </script>
+

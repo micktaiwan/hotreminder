@@ -1,6 +1,8 @@
 'use strict';
 
-angular.module('hotreminderApp', [])
+angular.module('hotreminderApp', [
+    'hotreminderApp.services.notification'
+    ])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
