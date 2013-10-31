@@ -9,6 +9,6 @@ angular.module('hotreminderApp')
       {show:false, subject: 'Avant de committer relisez la page du wiki qui défini la notion de \'fini\'', author: 'Mickael F.', content: 'Ouais parce que c\'est important...', states: [{user_id_1: {state:'new'}}]}
     ];
     $scope.todo = [
-      {subject: 'afficher les sujets par date mais aussi classés par jour (\'Today\', puis \'Yesterday\', puis \'Last week\')', author: 'Mickael'}
+      {subject: 'Firebase :)', author: 'Mickael'}
     ];
   });
