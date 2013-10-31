@@ -28,14 +28,10 @@ body {
 
 .author {
   padding: 10px 0px 10px 0;
-  color:#888;
+  color:#BBB;
   font-style: italic;
 }
 
-.link {
-  cursor: pointer;
-}
-
-.active {
-  background-color: #DEF;
-}
+.list-group-item-text { color: #FFF;}
+.list-group-item { background-color: #EEE;}
+.link { cursor: pointer; }

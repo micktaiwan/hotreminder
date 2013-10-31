@@ -1,6 +1,7 @@
 <div class="list-group"  ng-repeat="s in subjects">
   <div class="list-group-item" ng-class="{true: 'active', false: ''}[s.show]" ng-init="s.show=false">
     <h4 class="list-group-item-heading link"  ng-click="s.show = !s.show">
+      <span class="glyphicon glyphicon-star"></span>
       <div class="subject">{{s.subject}}</div>
     </h4>
     <div class="list-group-item-text" ng-class="{true: '', false: 'hidden'}[s.show]">
@@ -12,10 +13,7 @@
 		</div>
     </div>
   </div>
-
-
 </div>
-
 
 <div class="panel panel-default">
 	<div class="panel-heading">Todo</div>
@@ -25,3 +23,12 @@
   	</ul>
 	</div>
 </div>
+
+<script>
+  if (window.webkitNotifications.checkPermission() == 0) {
+    // you can pass any url as a parameter
+    window.webkitNotifications.createNotification('https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQDHrGgAJhsykZ-g3km7AWrvcii_-RFycrdb-_dI1rTLfbTK2A9dQ', 'HotReminder', 'Welcome!').show();
+  } else {
+    window.webkitNotifications.requestPermission();
+  }
+</script>
