@@ -1,16 +1,29 @@
 'use strict';
 
 angular.module('hotreminderApp')
-  .controller('MainCtrl', function ($scope, Notification) {
-    $scope.subjects = [
-      {show:false, subject: 'Script pour recharger la base', author: 'Franck L.', content:'Blabla\nJe teste\nComment je converti les retours à la ligne ?', states: [{user_id_1: {state:'new'}}]},
-      {show:false, subject: 'On ne passe plus de TU, la priorité c\'est les TI', author: 'Amandine V.', content: 'Super contenu non ?', states: [{user_id_1: {state:'new'}}]},
-      {show:false, subject: 'On gèle les commits mardi soir', author: 'Mickael F.', content: 'Bla bla', states: [{user_id_1: {state:'new'}}]},
-      {show:false, subject: 'Avant de committer relisez la page du wiki qui défini la notion de \'fini\'', author: 'Mickael F.', content: 'Ouais parce que c\'est important...', states: [{user_id_1: {state:'new'}}]}
-    ];
-    $scope.todo = [
-      {subject: 'Firebase :)', author: 'Mickael'}
-    ];
+
+  .controller('MainCtrl', function ($scope, $location, Google, Db, Notification) {
+
+    if(Google.getUser() == null) {
+      $location.path('/');
+      return;l
+    }
+
+    Db.init();
+    $scope.subjects = [];
+
+    Db.getSubjects(function(values) {
+      console.log('getting subjects');
+      $scope.subjects = []; // we reinitialize all subjects
+      for(var i in values) {
+        $scope.subjects.push(values[i]);
+      };
+      console.log($scope.subjects.length+' subjects')
+    });
+
+    $scope.addSubject = function(title, content) {
+      Db.addSubject(title, content);
+    };
 
     $scope.enableNotifications = function() {
         Notification.enableNotifications();

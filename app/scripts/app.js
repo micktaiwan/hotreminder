@@ -1,11 +1,17 @@
 'use strict';
 
 angular.module('hotreminderApp', [
-    'hotreminderApp.services.notification'
+    'hotreminderApp.services.notification',
+    'hotreminderApp.services.db',
+    'google'
     ])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
+        templateUrl: 'views/login.html',
+        controller: 'LoginCtrl'
+      })
+      .when('/main', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
