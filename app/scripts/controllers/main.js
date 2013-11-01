@@ -3,8 +3,22 @@
 angular.module('hotreminderApp')
 
   .controller('MainCtrl', function ($scope, Db, Notification) {
-    $scope.subjects = Db.subjects;
-    $scope.todo = Db.todo;
+    Db.init();
+    $scope.subjects = [];
+
+    Db.getSubjects(function(values) {
+      console.log('getting subjects');
+      $scope.subjects = []; // we reinitialize all subjects
+      for(var i in values) {
+        $scope.subjects.push(values[i]);
+      };
+      console.log($scope.subjects.length+' subjects')
+    });
+
+    $scope.addSubject = function(title, content) {
+      console.log(title);
+      Db.addSubject(title, content, 'Mick');
+    };
 
     $scope.enableNotifications = function() {
         Notification.enableNotifications();

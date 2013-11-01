@@ -1,3 +1,20 @@
+<form name="add_form" ng-submit="addSubject(title, content)" role="form">
+
+  <div class="form-group">
+    <label class="control-label sr-only" for="title">Title</label>
+    <input ng-model="title" type="text" class="form-control" id="title" placeholder="Reminder title" required>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label sr-only" for="content">Explanations</label>
+    <textarea ng-model="content" class="form-control" id="content" placeholder="Explanations"></textarea>
+  </div>
+
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Add subject</button>
+  </div>
+</form>
+
 <h2><span class="label label-danger">New</span></h2>
 <div class="list-group"  ng-repeat="s in subjects | filter:search | filter:states.user_id_1.state='new'" ng-include="'views/_subject.html'"></div>
 <h2><span class="label label-warning">What?</span></h2>
@@ -5,19 +22,22 @@
 <h2><span class="label label-success">I know</span></h2>
 <div class="list-group"  ng-repeat="s in subjects | filter:search | filter:states.user_id_1.state='ok'" ng-include="'views/_subject.html'"></div>
 
+<!--
 <div class="panel panel-default">
-	<div class="panel-heading">Todo</div>
+	<div class="panel-heading">Notes</div>
 	<div class="panel-body">
   	<ul>
-  	  <li ng-repeat="s in todo">{{s.subject}} -- {{s.author}}</li>
+  	  <li>Youpi</li>
   	</ul>
 	</div>
 </div>
+ -->
+
 
 <script>
   // Uncomment me :)
-/*
-  if (window.webkitNotifications.checkPermission() == 0) {
+
+/*  if (window.webkitNotifications.checkPermission() == 0) {
     // you can pass any url as a parameter
     window.webkitNotifications.createNotification('https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQDHrGgAJhsykZ-g3km7AWrvcii_-RFycrdb-_dI1rTLfbTK2A9dQ', 'HotReminder', 'Welcome!').show();
   } else {

@@ -1,9 +1,9 @@
-<div class="list-group-item" ng-class="{true: 'active', false: ''}[s.show]">
+<div class="list-group-item" ng-class="{true: 'active', false: ''}[s.show]" ng-init="s.show=false">
   <h4 class="list-group-item-heading link"  ng-click="s.show = !s.show">
     <span class="glyphicon glyphicon-star"></span>
-    <div class="subject">{{s.subject}}</div>
+    <div class="title">{{s.title}}</div>
   </h4>
-  <div class="list-group-item-text" ng-class="{true: '', false: 'hidden'}[s.show]">
+  <div class="list-group-item-text" ng-class="{false: 'hidden'}[s.show]">
     {{s.content}}
     <div class="author">{{s.author}}</div>
 	<div class="btn-group">
