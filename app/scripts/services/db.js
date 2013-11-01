@@ -1,6 +1,7 @@
 angular.module('hotreminderApp.services.db', []).factory('Db', function($rootScope, $location) {
 
   var subjects;
+  var user;
   var firstConnection = true;
 
   return {
@@ -8,6 +9,11 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
     init : function() {
       subjects = new Firebase('https://hotreminder.firebaseio.com/subjects');
       console.log("db subjects ref: "+subjects);
+    },
+
+    setUser: function(u) {
+      user = u;
+      console.log('connection: '+u.displayName + ", " + u.id);
     },
 
     getSubjects : function(callbackSuccess) {
@@ -31,14 +37,28 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
       });
     },
 
-    addSubject : function(title, content, author) {
-      console.log('Db.sddSubject '+ title + ", " + content + ", " + author);
+    getUser: function() {return user;},
+    setState: function(id, state) {
+      subjects.child(id).child('states').child(user.id).update({state : state});
+      },
+
+    addSubject : function(title, content) {
+      console.log('Db.addSubject '+ title + ", " + content);
       date = (new Date()).getTime();
       if(!content) content = '';
-      states = {
-        'user_id_1': {state: 'new'}
+      states = {} // no associations is done at all
+      subjects.push({title: title, content: content, author: user.displayName, states: states});
+    },
+
+    newSubject : function (id, title, content, author, states, date) {
+      return {
+        id: id,
+        title: title,
+        content: content,
+        author: author,
+        states: states,
+        date: date
       }
-      subjects.push({title: title, content: content, author: author, states: states});
     },
 
 /*    deleteItem : function(id){
