@@ -13,7 +13,7 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
 
     setUser: function(u) {
       user = u;
-      console.log('connection: '+u.displayName);
+      console.log('connection: '+u.displayName + ", " + u.id);
     },
 
     getSubjects : function(callbackSuccess) {
@@ -37,7 +37,10 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
       });
     },
 
-    user: function() {return user;},
+    getUser: function() {return user;},
+    setState: function(id, state) {
+      subjects.child(id).child('states').child(user.id).update({state : state});
+      },
 
     addSubject : function(title, content) {
       console.log('Db.addSubject '+ title + ", " + content);
@@ -45,6 +48,17 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
       if(!content) content = '';
       states = {} // no associations is done at all
       subjects.push({title: title, content: content, author: user.displayName, states: states});
+    },
+
+    newSubject : function (id, title, content, author, states, date) {
+      return {
+        id: id,
+        title: title,
+        content: content,
+        author: author,
+        states: states,
+        date: date
+      }
     },
 
 /*    deleteItem : function(id){
