@@ -6,7 +6,7 @@ angular.module('hotreminderApp')
 
     if(Google.getUser() == null) {
       $location.path('/');
-      return;l
+      return;
     }
 
     Db.init();
