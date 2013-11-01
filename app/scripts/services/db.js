@@ -37,6 +37,7 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
       });
     },
 
+<<<<<<< HEAD
     user: function() {return user;},
 
     addSubject : function(title, content) {
@@ -45,6 +46,16 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
       if(!content) content = '';
       states = {} // no associations is done at all
       subjects.push({title: title, content: content, author: user.displayName, states: states});
+=======
+    addSubject : function(title, content, author) {
+      console.log('Db.sddSubject '+ title + ", " + content + ", " + author);
+      date = (new Date()).getTime();
+      if(!content) content = '';
+      states = {
+        'user_id_1': {state: 'new'}
+      }
+      subjects.push({title: title, content: content, author: author, states: states});
+>>>>>>> be2e101f6b128e804207f63124eb5d54c72996df
     },
 
 /*    deleteItem : function(id){

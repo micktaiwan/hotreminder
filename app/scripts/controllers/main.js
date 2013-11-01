@@ -22,7 +22,12 @@ angular.module('hotreminderApp')
     });
 
     $scope.addSubject = function(title, content) {
+<<<<<<< HEAD
       Db.addSubject(title, content);
+=======
+      console.log(title);
+      Db.addSubject(title, content, 'Mick');
+>>>>>>> be2e101f6b128e804207f63124eb5d54c72996df
     };
 
     $scope.enableNotifications = function() {
