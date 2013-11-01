@@ -30,8 +30,10 @@ body {
   padding: 10px 0px 10px 0;
   color:#BBB;
   font-style: italic;
+  display: inline;
+  font-size: normal;
 }
-
+.subject-content {margin-bottom: 10px;}
 .list-group-item-text { color: #FFF;}
 .list-group-item { background-color: #EEE;}
 .link { cursor: pointer; }
