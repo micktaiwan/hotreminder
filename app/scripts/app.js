@@ -8,10 +8,6 @@ angular.module('hotreminderApp', [
     ])
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/', {
-        templateUrl: 'views/login.html',
-        controller: 'LoginCtrl'
-      })
       .when('/main', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
@@ -20,7 +16,11 @@ angular.module('hotreminderApp', [
         templateUrl: 'views/notification_test.html',
         controller: 'NotificationTestCtrl'
       })
+      .when('/:params', {
+        templateUrl: 'views/login.html',
+        controller: 'LoginCtrl'
+      })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/main'
       });
   });

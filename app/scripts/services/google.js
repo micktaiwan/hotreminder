@@ -6,29 +6,58 @@ angular.module('google', [])
 
         var initLoaded = false;
         var user;
+        var clientId = '156435181273.apps.googleusercontent.com';
+        var apiKey   = 'AIzaSyD_mjw5MP9VbxNN1120BVo8_Fi-BUyQ-Wk';
+        var scopes   = 'https://www.googleapis.com/auth/plus.me';
 
-        (function() {
-            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-            po.src = 'https://apis.google.com/js/client:plusone.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-        })();
-
-        window.signinCallback = function(authResult) {
-            if (authResult['access_token']) {
-                document.getElementById('signinButton').setAttribute('style', 'display: none');
-                initLoaded = true;
-            } else if (authResult['error']) {
-                console.log('There was an error: ' + authResult['error']);
-            }
+        var handleClientLoad = function() {
+          gapi.client.setApiKey(apiKey);
+          window.setTimeout(checkAuth,1);
         };
 
-        var isReady =  function(callbackSuccess){
-            var interval = setInterval(function() {
-                if (initLoaded) {
-                    callbackSuccess();
-                    clearInterval(interval);
-                }
-            }, 10);
+        var checkAuth = function() {
+          gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: true}, handleAuthResult);
+        };
+
+        var handleAuthResult = function(authResult) {
+          var authorizeButton = document.getElementById('authorize-button');
+          if (authResult && !authResult.error) {
+            authorizeButton.style.visibility = 'hidden';
+            makeApiCall();
+          } else {
+            authorizeButton.style.visibility = '';
+            authorizeButton.onclick = handleAuthClick;
+          }
+        };
+
+        var handleAuthClick = function(event) {
+          gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false}, handleAuthResult);
+          return false;
+        };
+
+        var makeApiCall = function() {
+          gapi.client.load('plus', 'v1', function() {
+              console.log(gapi.client.plus);
+              var request = gapi.client.plus.people.get({
+                  'userId': 'me'
+                    });
+              request.execute(function(resp) {
+                  console.log(resp);
+                  if(resp.error) {
+                    var heading = document.createElement('h4');
+                    heading.appendChild(document.createTextNode(resp.error.message));
+                    document.getElementById('content').appendChild(heading);
+                  }
+                  else {
+                    var heading = document.createElement('h4');
+                    var image = document.createElement('img');
+                    image.src = resp.image.url;
+                    heading.appendChild(image);
+                    heading.appendChild(document.createTextNode(resp.displayName));
+                    document.getElementById('content').appendChild(heading);
+                  }
+                });
+            });
         };
 
         return {
@@ -38,19 +67,8 @@ angular.module('google', [])
             },
 
             login: function(callbackSuccess, callbackError){
-
-                isReady(function(){
-                    gapi.client.load('plus','v1', function(){
-                        var request = gapi.client.plus.people.get({
-                            'userId': 'me'
-                        });
-                        request.execute(function(resp) {
-                            user = resp;
-                            callbackSuccess();
-                        });
-                    });
-                });
-
+                handleClientLoad();
+                return;
             },
 
             getUser: function(){

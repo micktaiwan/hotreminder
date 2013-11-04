@@ -6,13 +6,14 @@ angular.module('hotreminderApp')
 
     var u = Google.getUser();
     if(!u || !u.id ) {
+      console.log('not loggued');
       $location.path('/');
       return;
     }
 
     Db.init();
     $scope.subjects = [];
-    $scope.user = Db.getUser();
+    $scope.user = u;
 
     Db.getSubjects(function(values) {
       $scope.subjects = []; // we reinitialize all subjects

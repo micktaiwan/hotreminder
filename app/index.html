@@ -66,7 +66,7 @@
       </div><!-- /.navbar-collapse -->
     </nav>
 
-    <div class="container" ng-view="">Loading...</div>
+    <div id='content' class="container" ng-view="">Loading...</div>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
 <!--      <script>
@@ -87,6 +87,7 @@
         <!-- endbuild -->
 
         <script src="//cdn.firebase.com/v0/firebase.js"></script>
+        <script src="https://apis.google.com/js/client:plusone.js"></script>
 
         <!-- build:js scripts/modules.js -->
         <script src="bower_components/angular-resource/angular-resource.js"></script>
@@ -98,7 +99,7 @@
         <script src="scripts/app.js"></script>
         <script src="scripts/services/notification.js"></script>
         <script src="scripts/services/db.js"></script>
-        <script src="scripts/services/google.js"></script>
+        <script src="scripts/services/google_simple.js"></script>
         <script src="scripts/filters/filterStateBy.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/login.js"></script>
