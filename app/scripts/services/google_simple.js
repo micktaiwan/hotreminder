@@ -1,8 +1,6 @@
 'use strict';
 
-angular.module('google', [])
-
-  .factory('Google', function ($rootScope, $routeParams) {
+angular.module('google', []).factory('Google', function ($rootScope, $routeParams) {
 
     var user;
 
@@ -13,12 +11,11 @@ angular.module('google', [])
     };
 
     var setting = {
-        'host':     "https://accounts.google.com/o/oauth2/auth",
-        'clientId': '156435181273.apps.googleusercontent.com'
-      };
+      'host':     "https://accounts.google.com/o/oauth2/auth",
+      'clientId': '156435181273.apps.googleusercontent.com'
+    };
 
     var doAuth = function(callback) {
-      console.log($routeParams);
       var token = extractToken($routeParams.params);
       if (token) {
         $.ajax({
@@ -32,14 +29,11 @@ angular.module('google', [])
             }
         });
       } else {
-        console.log("no token, setting login url");
-        var authUrl = setting.host +
+        $rootScope.authUrl = setting.host +
           "?response_type=token" +
           "&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile" +
           "&client_id="    + setting.clientId +
           "&redirect_uri=" + window.location;
-        $rootScope.authUrl = authUrl;
-        console.log(authUrl);
       }
     };
 
@@ -55,6 +49,10 @@ angular.module('google', [])
           }
         });
         return user;
+      },
+
+      logout: function() {
+        user = null;
       },
 
       getUser: function(){

@@ -14,6 +14,7 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
     setUser: function(u) {
       user = u;
       console.log('connection: '+u.name + ", " + u.id);
+      return u;
     },
 
     getSubjects : function(callbackSuccess) {

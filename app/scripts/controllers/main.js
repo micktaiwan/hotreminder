@@ -6,7 +6,6 @@ angular.module('hotreminderApp')
 
     var u = Google.getUser();
     if(!u || !u.id ) {
-      console.log('not loggued');
       $location.path('/');
       return;
     }
