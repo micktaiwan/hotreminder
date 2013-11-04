@@ -47,7 +47,11 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
       date = (new Date()).getTime();
       if(!content) content = '';
       states = {} // no associations is done at all
-      subjects.push({title: title, content: content, author: user.displayName, states: states});
+      subjects.push({title: title, content: content, author: {name: user.displayName, id: user.id}, states: states});
+    },
+
+    deleteSubject : function(id) {
+      subjects.child(id).remove();
     },
 
     newSubject : function (id, title, content, author, states, date) {

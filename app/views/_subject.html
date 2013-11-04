@@ -1,7 +1,7 @@
 <div class="list-group-item" ng-class="{true: 'active', false: ''}[s.show]" ng-init="s.show=false">
   <h4 class="list-group-item-heading link"  ng-click="s.show = !s.show">
     <span class="glyphicon glyphicon-star"></span>
-    <div class="title">{{s.title}}</div> <div class="author">{{s.author}}</div>
+    <div class="title">{{s.title}}</div> <div class="author">{{s.author.name}}</div>
   </h4>
   <div class="list-group-item-text" ng-class="{false: 'hidden'}[s.show]">
     <div class="subject-content">{{s.content}}</div>
@@ -9,6 +9,9 @@
 	<div class="btn-group">
 	  <button type="button" class="btn btn-success" ng-click="setState(s.id,'ok')">I know</button>
 	  <button type="button" class="btn btn-warning" ng-click="setState(s.id,'what')">What ?</button>
+  </div>
+  <div class="btn-group pull-right">
+    <button type="button" class="btn btn-danger" ng-class="{true: 'hidden'}[s.author.id!=user.id]" ng-click="deleteSubject(s.id)">Delete</button>
 	</div>
   </div>
 </div>

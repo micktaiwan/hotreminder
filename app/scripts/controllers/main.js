@@ -4,14 +4,15 @@ angular.module('hotreminderApp')
 
   .controller('MainCtrl', function ($scope, $location, Google, Db, Notification) {
 
-    if(Google.getUser() == null) {
+    var u = Google.getUser();
+    if(!u || !u.id ) {
       $location.path('/');
       return;
     }
 
     Db.init();
     $scope.subjects = [];
-    $scope.user_id = Db.getUser().id;
+    $scope.user = Db.getUser();
 
     Db.getSubjects(function(values) {
       $scope.subjects = []; // we reinitialize all subjects
@@ -24,6 +25,9 @@ angular.module('hotreminderApp')
 
     $scope.addSubject = function(title, content) {
       Db.addSubject(title, content);
+    };
+    $scope.deleteSubject = function(id) {
+      Db.deleteSubject(id);
     };
 
     $scope.setState = function(subject, state) {
