@@ -1,3 +1,5 @@
+// Done very quickly :)
+
 'use strict';
 
 angular.module('google', []).factory('Google', function ($rootScope, $routeParams) {
