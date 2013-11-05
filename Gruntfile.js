@@ -254,7 +254,7 @@ module.exports = function (grunt) {
             'bower_components/angular-sanitize/*',
             'bower_components/bootstrap/**/*',
             'bower_components/jquery/*',
-            'images/{,*/}*.{gif,webp}',
+            'images/{,*/}*.{png,gif,webp}',
             'styles/fonts/*'
           ]
         }, {

@@ -38,3 +38,4 @@ body {
 .list-group-item { background-color: #EEE;}
 .link { cursor: pointer; }
 .navbar-inverse .navbar-brand { color: #FA0; }
+img {border:0;}
