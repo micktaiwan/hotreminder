@@ -252,7 +252,7 @@ module.exports = function (grunt) {
             'bower_components/angular-resource/*',
             'bower_components/angular-cookies/*',
             'bower_components/angular-sanitize/*',
-            'bower_components/bootstrap/**/*',
+            'bower_components/bootstrap/dist/*',
             'bower_components/jquery/*',
             'images/{,*/}*.{png,gif,webp}',
             'styles/fonts/*'
