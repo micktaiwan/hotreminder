@@ -20,7 +20,7 @@ angular.module('google', []).factory('Google', function ($rootScope, $routeParam
     var doAuth = function(callback) {
       var token = extractToken($routeParams.params);
       if (token) {
-        $.ajax({
+        $.ajax({ // FIXME: use Angular's $ressource ?
             url: 'https://www.googleapis.com/oauth2/v1/userinfo?access_token='+token,
             beforeSend: function (xhr) {
               xhr.setRequestHeader('Authorization', "OAuth " + token);

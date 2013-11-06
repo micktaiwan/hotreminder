@@ -1,11 +1,11 @@
 'use strict';
 
-angular.module('hotreminderApp.services.db', []).factory('Db', function($rootScope, $location) {
+angular.module('hotreminderApp.services.db', []).factory('Db', function($rootScope, $location, CONFIG) {
 
   var user;
 
   var subjects    = [];
-  var subjects_ref = new Firebase('https://dev-hotreminder.firebaseio.com/subjects');
+  var subjects_ref = new Firebase(CONFIG.firebaseUrl + '/subjects');
   console.log("Connected to subjects db. Ref: " + subjects_ref);
 
   function safeApply(scope, fn) {
@@ -57,7 +57,17 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
         content: content,
         author: author,
         states: states,
-        date: date
+        date: date,
+
+        hasStateForCurrentUser: function(state) {
+          return(states && states[user.id] && states[user.id].state && states[user.id].state == state);
+        },
+        hasNoState: function() {
+          return(!states || !states[user.id] || !states[user.id].state);
+        },
+
+
+
       }
     },
 

@@ -113,7 +113,8 @@ module.exports = function (grunt) {
           src: [
             '.tmp',
             '<%= yeoman.dist %>/*',
-            '!<%= yeoman.dist %>/.git*'
+            '!<%= yeoman.dist %>/.git*',
+            '!<%= yeoman.dist %>/.nojekyll'
           ]
         }]
       },
@@ -154,7 +155,7 @@ module.exports = function (grunt) {
     },
     // not used since Uglify task does concat,
     // but still available if needed
-    /*concat: {
+/*    concat: {
       dist: {}
     },*/
     rev: {
@@ -271,6 +272,18 @@ module.exports = function (grunt) {
         cwd: '<%= yeoman.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
+      },
+      dev_env: {
+        //expand: true,
+        cwd: '.',
+        src: 'env/dev.js',
+        dest: '<%= yeoman.app %>/scripts/env.js'
+      },
+      dev_prod: {
+        //expand: true,
+        cwd: '.',
+        src: 'env/prod.js',
+        dest: '<%= yeoman.app %>/scripts/env.js'
       }
     },
     concurrent: {
@@ -329,6 +342,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
+      'copy:dev_env',
       'concurrent:server',
       'autoprefixer',
       'connect:livereload',
@@ -339,6 +353,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', [
     'clean:server',
+    'copy:dev_env',
     'concurrent:test',
     'autoprefixer',
     'connect:test',
@@ -347,6 +362,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
+    'copy:dev_prod',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',

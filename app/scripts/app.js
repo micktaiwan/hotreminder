@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('hotreminderApp', [
+    'hotreminderApp.config',
     'hotreminderApp.services.notification',
     'hotreminderApp.services.db',
     'hotreminderApp.filters.filterStateBy',
