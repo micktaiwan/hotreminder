@@ -19,7 +19,7 @@ module.exports = function (grunt) {
   // configurable paths
   var yeomanConfig = {
     app: 'app',
-    dist: 'dist'
+    dist: '../hotreminder_dist'
   };
 
   try {
@@ -163,7 +163,7 @@ module.exports = function (grunt) {
           src: [
             '<%= yeoman.dist %>/scripts/{,*/}*.js',
             '<%= yeoman.dist %>/styles/{,*/}*.css',
-            '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+            //'<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
             '<%= yeoman.dist %>/styles/fonts/*'
           ]
         }
@@ -252,7 +252,7 @@ module.exports = function (grunt) {
             'bower_components/angular-resource/*',
             'bower_components/angular-cookies/*',
             'bower_components/angular-sanitize/*',
-            'bower_components/bootstrap/dist/*',
+            'bower_components/bootstrap/dist/**/*',
             'bower_components/jquery/*',
             'images/{,*/}*.{png,gif,webp}',
             'styles/fonts/*'

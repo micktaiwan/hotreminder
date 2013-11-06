@@ -1,17 +1,18 @@
+'use strict';
+
 angular.module('hotreminderApp.services.db', []).factory('Db', function($rootScope, $location) {
 
-  var subjects;
   var user;
-  var firstConnection = true;
+
+  var subjects    = [];
+  var subjects_ref = new Firebase('https://dev-hotreminder.firebaseio.com/subjects');
+  console.log("Connected to subjects db. Ref: " + subjects_ref);
+
+  function safeApply(scope, fn) {
+    (scope.$$phase || scope.$root.$$phase) ? fn() : scope.$apply(fn);
+  };
 
   return {
-
-    init : function() {
-      if(!subjects) {
-        subjects = new Firebase('https://dev-hotreminder.firebaseio.com/subjects');
-        console.log("Connected to subjects db. Ref: " + subjects);
-        }
-    },
 
     setUser: function(u) {
       user = u;
@@ -20,42 +21,33 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
     },
 
     getSubjects : function(callbackSuccess) {
-      if (!subjects) {
-        console.log('no subjects ref while getting values');
-        //$location.path('/');
-        return;
-      }
-      subjects.on('value', function(snapshot) {
+      subjects_ref.on('value', function(snapshot) {
         if(snapshot.val() !== null) {
-          if(firstConnection){
-            $rootScope.$apply(function(){
-              callbackSuccess(snapshot.val());
-            });
-          } else {
+          safeApply($rootScope, function(){
             callbackSuccess(snapshot.val());
-          }
+            return;
+          });
         }
         else { console.log('no values in DB'); }
-        firstConnection = false;
       });
     },
 
     getUser: function() {return user;},
 
     setState: function(id, state) {
-      subjects.child(id).child('states').child(user.id).update({state : state});
+      subjects_ref.child(id).child('states').child(user.id).update({state : state});
       },
 
     addSubject : function(title, content) {
       console.log('Db.addSubject '+ title + ", " + content);
-      date = (new Date()).getTime();
+      var date = (new Date()).getTime();
       if(!content) content = '';
-      states = {} // no associations is done at all
-      subjects.push({title: title, content: content, author: {name: user.name, id: user.id}, states: states});
+      var states = {} // no associations is done at all
+      subjects_ref.push({title: title, content: content, author: {name: user.name, id: user.id}, states: states});
     },
 
     deleteSubject : function(id) {
-      subjects.child(id).remove();
+      subjects_ref.child(id).remove();
     },
 
     newSubject : function (id, title, content, author, states, date) {

@@ -2,7 +2,7 @@
 
 angular.module('hotreminderApp')
 
-  .controller('MainCtrl', function ($scope, $location, Google, Db, Notification) {
+  .controller('MainCtrl', function ($rootScope, $scope, $location, Google, Db, Notification) {
 
     var u = Google.getUser();
     if(!u || !u.id ) {
@@ -10,9 +10,12 @@ angular.module('hotreminderApp')
       return;
     }
 
-    Db.init();
     $scope.subjects = [];
     $scope.user = u;
+
+    $scope.addNotification = function(type, notif){
+      Notification.addNotifications(type, notif);
+    };
 
     Db.getSubjects(function(values) {
       $scope.subjects = []; // we reinitialize all subjects
@@ -20,7 +23,8 @@ angular.module('hotreminderApp')
       for(var i in values) {
         $scope.subjects.push(Db.newSubject(i, values[i].title, values[i].content, values[i].author, values[i].states, values[i].date));
       };
-      console.log($scope.subjects.length+' subjects')
+      console.log($scope.subjects.length+' subjects');
+      //$scope.addNotification(Notification.types.INFO, $scope.subjects.length+' subjects');
     });
 
     $scope.addSubject = function(title, content) {
@@ -29,17 +33,8 @@ angular.module('hotreminderApp')
     $scope.deleteSubject = function(id) {
       Db.deleteSubject(id);
     };
-
     $scope.setState = function(subject, state) {
       Db.setState(subject, state);
-    };
-
-    $scope.enableNotifications = function() {
-        Notification.enableNotifications();
-    };
-
-    $scope.addNotification = function(){
-        Notification.addNotifications(Notification.types.WARNING, this.notification);
     };
 
   });
