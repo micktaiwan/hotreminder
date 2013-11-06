@@ -7,8 +7,10 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
   return {
 
     init : function() {
-      subjects = new Firebase('https://dev-hotreminder.firebaseio.com/subjects');
-      console.log("db subjects ref: "+subjects);
+      if(!subjects) {
+        subjects = new Firebase('https://dev-hotreminder.firebaseio.com/subjects');
+        console.log("Connected to subjects db. Ref: " + subjects);
+        }
     },
 
     setUser: function(u) {

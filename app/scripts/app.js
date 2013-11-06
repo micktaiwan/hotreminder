@@ -16,6 +16,10 @@ angular.module('hotreminderApp', [
         templateUrl: 'views/notification_test.html',
         controller: 'NotificationTestCtrl'
       })
+      .when('/about', {
+        templateUrl: 'views/about.html',
+        controller: 'AboutCtrl'
+      })
       .when('/:params', {
         templateUrl: 'views/login.html',
         controller: 'LoginCtrl'

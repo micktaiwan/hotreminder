@@ -6,7 +6,7 @@ angular.module('hotreminderApp')
     Google.login(function(){
       $rootScope.$apply(function(){
         var u = Google.getUser();
-        console.log(u);
+        //console.log(u);
         $rootScope.user = u;
         Db.setUser(u);
         $location.path('#/main');
