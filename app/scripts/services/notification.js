@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('hotreminderApp.services.notification', []).factory('Notification', function($rootScope){
 
   return {
