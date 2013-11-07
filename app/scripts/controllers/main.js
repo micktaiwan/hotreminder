@@ -30,11 +30,5 @@ angular.module('hotreminderApp')
     $scope.addSubject = function(title, content) {
       Db.addSubject(title, content);
     };
-    $scope.deleteSubject = function(id) {
-      Db.deleteSubject(id);
-    };
-    $scope.setState = function(subject, state) {
-      Db.setState(subject, state);
-    };
 
   });

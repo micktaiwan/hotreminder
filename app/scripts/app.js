@@ -4,6 +4,7 @@ angular.module('hotreminderApp', [
     'hotreminderApp.services.notification',
     'hotreminderApp.services.db',
     'hotreminderApp.filters.filterStateBy',
+    'hotreminderApp.directives.subject',
     'google'
     ])
   .config(function ($routeProvider) {
