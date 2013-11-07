@@ -1,6 +1,9 @@
 <div class="list-group-item" ng-class="{true: 'active', false: ''}[s.show]">
 
-<!-- <div>
+<!--
+
+TODO: become editable, like this:
+<div>
     <span class="c1" ng-hide="editorEnabled" ng-click="enableEditor();">{{model.title}}</span>
     <input class="form-control" ng-show="editorEnabled" ng-model="title" ng-required ui-keypress="{13: 'unEdit()'}" ui-event="{'blur': 'unEdit()'}"/>
 </div>
@@ -14,15 +17,13 @@
   </h4>
   <div class="list-group-item-text" ng-show="s.show">
     <div class="subject-content">{{s.content}}</div>
-
-	<div class="btn-group">
-    <button type="button" class="btn btn-danger" ng-hide="s.hasNoState() || s.hasStateForCurrentUser('new')" ng-click="setState(s.id,'new')">Reset to new</button>
-	  <button type="button" class="btn btn-success" ng-class="{true: 'hidden'}[s.hasStateForCurrentUser('ok')]" ng-click="setState(s.id,'ok')">I know</button>
-	  <button type="button" class="btn btn-warning" ng-class="{true: 'hidden'}[s.hasStateForCurrentUser('what')]"ng-click="setState(s.id,'what')">What ?</button>
-  </div>
-  <div class="btn-group pull-right">
-    <button type="button" class="btn btn-danger" ng-show="s.author.id==user.id" ng-click="deleteSubject(s.id)">Delete</button>
-	</div>
+  	<div class="btn-group">
+      <button type="button" class="btn btn-danger" ng-hide="s.hasNoState() || s.hasStateForCurrentUser('new')" ng-click="setState(s.id,'new')">Reset to new</button>
+  	  <button type="button" class="btn btn-success" ng-hide="s.hasStateForCurrentUser('ok')" ng-click="setState(s.id,'ok')">I know</button>
+  	  <button type="button" class="btn btn-warning" ng-hide="s.hasStateForCurrentUser('what')" ng-click="setState(s.id,'what')">What ?</button>
+    </div>
+    <div class="btn-group pull-right">
+      <button type="button" class="btn btn-danger" ng-show="s.author.id==user.id" ng-click="deleteSubject(s.id)">Delete</button>
+  	</div>
   </div>
 </div>
-
