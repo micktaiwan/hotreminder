@@ -16,11 +16,17 @@
 </form>
 
 <h2><span class="label label-danger">New</span></h2>
-<div class="list-group" ng-repeat="s in subjects | filter:search | filterStateBy:'new'" ng-include="'views/_subject.html'"></div>
+<div class="list-group" ng-repeat="s in subjects | filter:search | filterStateBy:'new'">
+  <subject object="s" user="user">
+</div>
 <h2><span class="label label-warning">What?</span></h2>
-<div class="list-group" ng-repeat="s in subjects | filter:search | filterStateBy:'what'" ng-include="'views/_subject.html'"></div>
+<div class="list-group" ng-repeat="s in subjects | filter:search | filterStateBy:'what'">
+  <subject object="s" user="user">
+</div>
 <h2><span class="label label-success">I know</span></h2>
-<div class="list-group" ng-repeat="s in subjects | filter:search | filterStateBy:'ok'" ng-include="'views/_subject.html'"></div>
+<div class="list-group" ng-repeat="s in subjects | filter:search | filterStateBy:'ok'">
+  <subject object="s" user="user">
+</div>
 
 <script>
   // Uncomment me :)
