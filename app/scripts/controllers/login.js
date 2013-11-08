@@ -9,7 +9,7 @@ angular.module('hotreminderApp')
         //console.log(u);
         $rootScope.user = u;
         Db.setUser(u);
-        $location.path('#/main');
+        $location.path('/main');
       });
     });
 

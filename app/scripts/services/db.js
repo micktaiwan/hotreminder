@@ -38,6 +38,10 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
       subjects_ref.child(id).child('states').child(user.id).update({state : state});
       },
 
+    edit: function(id, obj) {
+      subjects_ref.child(id).update(obj);
+      },
+
     addSubject : function(title, content) {
       console.log('Db.addSubject '+ title + ", " + content);
       var date = (new Date()).getTime();

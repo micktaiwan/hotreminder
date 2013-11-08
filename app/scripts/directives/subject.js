@@ -10,12 +10,13 @@ angular.module("hotreminderApp.directives.subject", ['ui']).directive('subject',
     templateUrl : 'views/subject.html',
 
     controller: function($scope) {
+
       $scope.s.show = false;
-      $scope.setState = function(subject, state) {
-        Db.setState(subject, state);
+      $scope.setState = function(state) {
+        Db.setState($scope.s.id, state);
       };
-      $scope.deleteSubject = function(id) {
-        Db.deleteSubject(id);
+      $scope.deleteSubject = function() {
+        Db.deleteSubject($scope.s.id);
       };
     },
 
@@ -23,17 +24,21 @@ angular.module("hotreminderApp.directives.subject", ['ui']).directive('subject',
 
       scope.editorEnabled = false;
 
-      scope.unEdit = function($event) {
-        scope.s = angular.copy(scope.s);
-        scope.editorEnabled = false;
+      scope.save = function($event) {
         if ($event != null) $event.preventDefault();
-        scope.changed();
+        scope.s = angular.copy(scope.edit);
+        Db.edit(scope.s.id, {title: scope.s.title, content: scope.s.content});
+        scope.editorEnabled = false;
+      };
+
+      scope.cancel = function($event) {
+        if ($event != null) $event.preventDefault();
+        scope.editorEnabled = false;
       };
 
       scope.enableEditor = function() {
-        scope.s = angular.copy(scope.s);
+        scope.edit = angular.copy(scope.s);
         scope.editorEnabled = true;
-        // The enabled element needs focus and we wait for some milliseconds before allowing to focus on it, so HTML can be compiled
         $timeout(function() {
           element.find('input').focus().select();
         }, 20);
