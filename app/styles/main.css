@@ -33,7 +33,7 @@ body {
   display: inline;
   font-size: normal;
 }
-.subject-content {margin-bottom: 10px;}
+.subject-content {margin-bottom: 10px;white-space: pre;}
 .list-group-item-text { color: #FFF;}
 .list-group-item { background-color: #EEE;}
 .link { cursor: pointer; }

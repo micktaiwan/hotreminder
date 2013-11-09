@@ -29,6 +29,8 @@ angular.module('hotreminderApp')
 
     $scope.addSubject = function(title, content) {
       Db.addSubject(title, content);
+      $scope.title    = '';
+      $scope.content  = '';
     };
 
   });
