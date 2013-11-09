@@ -28,19 +28,17 @@ body {
 
 .author {
   padding: 10px 0px 10px 0;
-  color:#BBB;
-  font-style: italic;
+  color:#333;
   display: inline;
-  font-size: small;
+  font-size: 0.8em;
 }
 .date {
   padding: 10px 0px 10px 0;
-  color:#BBB;
-  font-style: italic;
+  color:#555;
   display: inline;
-  font-size: small;
+  font-size: 0.8em;
 }
-.subject-content {margin-bottom: 10px;white-space: pre;}
+.subject-content {margin-bottom: 10px; white-space: pre;}
 .list-group-item-text { color: #FFF;}
 .list-group-item { background-color: #EEE;}
 .link { cursor: pointer; }

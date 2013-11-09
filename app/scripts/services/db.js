@@ -54,25 +54,19 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
       subjects_ref.child(id).remove();
     },
 
-    newSubject : function (id, title, content, author, states, date) {
-      return {
-        id: id,
-        title: title,
-        content: content,
-        author: author,
-        states: states,
-        date: date,
-
-        hasStateForCurrentUser: function(state) {
-          return(states && states[user.id] && states[user.id].state && states[user.id].state == state);
-        },
-        hasNoState: function() {
-          return(!states || !states[user.id] || !states[user.id].state);
-        },
-
-
-
-      }
+    newSubject : function (id, values) {
+      var obj = {};
+      for(var prop in values) {
+        obj[prop] = values[prop];
+      };
+      obj.id = id;
+      obj.hasStateForCurrentUser= function(state) {
+          return(this.states && this.states[user.id] && this.states[user.id].state && this.states[user.id].state == state);
+        };
+      obj.hasNoState= function() {
+          return(!this.states || !this.states[user.id] || !this.states[user.id].state);
+        };
+      return obj;
     },
 
   };

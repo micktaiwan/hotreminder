@@ -19,12 +19,10 @@ angular.module('hotreminderApp')
 
     Db.getSubjects(function(values) {
       $scope.subjects = []; // we reinitialize all subjects
-      //  $scope.subjects.push(values[i]);
       for(var i in values) {
-        $scope.subjects.push(Db.newSubject(i, values[i].title, values[i].content, values[i].author, values[i].states, values[i].date));
+        $scope.subjects.push(Db.newSubject(i, values[i]));
       };
       console.log($scope.subjects.length+' subjects');
-      //$scope.addNotification(Notification.types.INFO, $scope.subjects.length+' subjects');
     });
 
     $scope.addSubject = function(title, content) {
