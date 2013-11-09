@@ -31,7 +31,14 @@ body {
   color:#BBB;
   font-style: italic;
   display: inline;
-  font-size: normal;
+  font-size: small;
+}
+.date {
+  padding: 10px 0px 10px 0;
+  color:#BBB;
+  font-style: italic;
+  display: inline;
+  font-size: small;
 }
 .subject-content {margin-bottom: 10px;white-space: pre;}
 .list-group-item-text { color: #FFF;}

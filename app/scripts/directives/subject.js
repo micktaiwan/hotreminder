@@ -27,7 +27,7 @@ angular.module("hotreminderApp.directives.subject", ['ui']).directive('subject',
       scope.save = function($event) {
         if ($event != null) $event.preventDefault();
         scope.s = angular.copy(scope.edit);
-        Db.edit(scope.s.id, {title: scope.s.title, content: scope.s.content});
+        Db.edit(scope.s.id, {modificationDate: (new Date()).getTime(),title: scope.s.title, content: scope.s.content});
         scope.editorEnabled = false;
       };
 
