@@ -1,8 +1,14 @@
 'use strict';
-
+Date.prototype.getWeek = function() {
+  var onejan = new Date(this.getFullYear(),0,1);
+  return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
+}
 angular.module('hotreminderApp')
 
   .controller('MainCtrl', function ($rootScope, $scope, $location, Google, Db, Notification) {
+
+    $rootScope.current_date = new Date().getTime();
+    $rootScope.weekNumber = (new Date()).getWeek();
 
     var u = Google.getUser();
     if(!u || !u.id ) {
