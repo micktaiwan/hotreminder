@@ -1,4 +1,8 @@
-<form name="add_form" ng-submit="addSubject(title, content)" role="form">
+<div class="form-group" ng-hide="form_show">
+  <button class="btn btn-primary" ng-click="form_show=true">Add reminder</button>
+</div>
+
+<form name="add_form" ng-submit="addSubject(title, content)" role="form" ng-show="form_show">
 
   <div class="form-group">
     <label class="control-label sr-only" for="title">Title</label>
@@ -12,6 +16,7 @@
 
   <div class="form-group">
     <button type="submit" class="btn btn-primary">Add reminder</button>
+    <button type="button" class="btn btn-default" ng-click="form_show=false">Close</button>
   </div>
 </form>
 
