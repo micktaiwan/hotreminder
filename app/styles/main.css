@@ -45,6 +45,5 @@ body {
 .link { cursor: pointer; }
 .navbar-inverse .navbar-brand { color: #FA0; }
 img {border:0;}
-.comments {
-  color: #444;
-}
+.comments { color: #444;}
+.badge-i-know{background-color:#393; font-size: 0.7em;}
