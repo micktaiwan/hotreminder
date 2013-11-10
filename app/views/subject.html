@@ -5,7 +5,7 @@
     <!-- editor no enabled -->
     <div ng-hide="editorEnabled">
       <h4 class="list-group-item-heading">
-        <div class="title link" ng-click="s.show=!s.show"><span class="glyphicon glyphicon-star"></span> {{s.title}}</div>
+        <div class="title link" ng-click="s.show=!s.show; s.commentShow=s.show"><span class="glyphicon glyphicon-star"></span> {{s.title}}</div>
         <div class="author">{{s.author.name}}</div>
         <div class="date">{{s.modificationDate | date}}</div>
         <span class="badge link" ng-click="s.commentShow=!s.commentShow">2 comments</span>
