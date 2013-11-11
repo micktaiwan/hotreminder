@@ -1,4 +1,4 @@
-angular.module("hotreminderApp.directives.subject", ['ui']).directive('subject', function($timeout, Db) {
+angular.module("hotreminderApp.directives.subject", ['ui']).directive('subject', function($rootScope, $timeout, Db) {
   return {
     restrict: 'E',
     replace: true,
@@ -11,9 +11,18 @@ angular.module("hotreminderApp.directives.subject", ['ui']).directive('subject',
 
     controller: function($scope) {
 
-      $scope.s.show = false;
+      if(!$scope.s.show) $scope.s.show = false;
       $scope.setState = function(state) {
         Db.setState($scope.s.id, state);
+/*        var obj = $rootScope.iterate($scope.s, ['states', $scope.user.id, 'state']);
+        obj = state;
+        $scope.$digest();
+        console.log(obj);
+*/
+        if(!$scope.s.states) $scope.s.states = {};
+        if(!$scope.s.states[$scope.user.id]) $scope.s.states[$scope.user.id] = {};
+        $scope.s.states[$scope.user.id].state = state;
+        $scope.s.showComments = false;
       };
       $scope.deleteSubject = function() {
         if(!$scope.s.id) console.log('no subject id')

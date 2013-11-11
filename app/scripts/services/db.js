@@ -21,6 +21,7 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
     },
 
     getSubjects : function(callbackSuccess) {
+      subjects_ref.off('value');
       subjects_ref.on('value', function(snapshot) {
         if(snapshot.val() !== null) {
           safeApply($rootScope, function(){
@@ -33,6 +34,7 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
     },
 
     onAddingSubject: function(callbackSuccess) {
+      subjects_ref.off('child_added');
       subjects_ref.on('child_added', function(snapshot) {
         safeApply($rootScope, function(){
           callbackSuccess(snapshot.val());
@@ -42,6 +44,7 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
     },
 
     onDeletingSubject: function(callbackSuccess) {
+      subjects_ref.off('child_removed');
       subjects_ref.on('child_removed', function(snapshot) {
         safeApply($rootScope, function(){
           callbackSuccess(snapshot.val());

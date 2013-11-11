@@ -10,8 +10,15 @@ angular.module('hotreminderApp')
   .controller('MainCtrl', function ($rootScope, $scope, $location, Google, Db, Notification) {
 
     $rootScope.current_date = new Date().getTime();
-    $rootScope.weekNumber = (new Date()).getWeek();
-
+    $rootScope.weekNumber   = new Date().getWeek();
+/*    $rootScope.iterate = function(obj, props, index) {
+      console.log(obj);
+      if(!index) index = 0;
+      if(index>=props.length) return obj[props[index-1]];
+      if(!obj[props[index]]) obj[obj[props[index]]] = {};
+      return $rootScope.iterate(obj[props[index]], props, index+1);
+    };
+*/
     var u = Google.getUser();
     if(!u || !u.id ) {
       $location.path('/');

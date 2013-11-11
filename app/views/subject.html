@@ -5,10 +5,10 @@
     <!-- editor no enabled -->
     <div ng-hide="editorEnabled">
       <h4 class="list-group-item-heading">
-        <div class="title link" ng-click="s.show=!s.show; s.commentShow=s.show"><span class="glyphicon glyphicon-star"></span> {{s.title}}</div>
+        <div class="title link" ng-click="s.show=!s.show; s.showComments=s.show"><span class="glyphicon glyphicon-star"></span> {{s.title}}</div>
         <div class="author">{{s.author.name}}</div>
         <div class="date">{{s.modificationDate | date}}</div>
-        <span class="badge link" ng-click="s.commentShow=!s.commentShow">{{ s.comments.length }} comments</span>
+        <span class="badge link" ng-click="s.showComments=!s.showComments">{{ s.comments.length }} comments</span>
         <div class="alert alert-sm alert-danger pull-right" ng-hide="s.id">No id!</div>
       </h4>
       <div class="list-group-item-text" ng-show="s.show">
@@ -39,7 +39,7 @@
   </div>
 
   <!-- Comments -->
-  <div class="list-group-item" ng-show="s.commentShow">
+  <div class="list-group-item" ng-show="s.showComments">
     <div class="list-group-item-text">
       <ul class="comments">
         <li ng-repeat="c in s.comments">{{c.text}}
