@@ -53,7 +53,13 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
     deleteSubject : function(id) {
       subjects_ref.child(id).remove();
     },
-
+    addComment : function(sid, text) {
+      var id = subjects_ref.child(sid).child('comments').push().name(); // generate a unique id based on timestamp
+      subjects_ref.child(sid).child('comments').child(id).set({id: id, text: text, author: {id: user.id, name: user.name}, date: (new Date()).getTime()});
+    },
+    deleteComment : function(sid, cid) {
+      subjects_ref.child(sid).child('comments').child(cid).remove();
+    },
     newSubject : function (id, values) {
       var obj = {};
       for(var prop in values) {
