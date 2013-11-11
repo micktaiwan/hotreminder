@@ -1,33 +1,57 @@
-<div class="list-group-item" ng-class="{'active':s.show}">
-<!-- editor no enabled -->
-  <div ng-hide="editorEnabled">
-    <h4 class="list-group-item-heading link" ng-click="s.show = !s.show">
-      <span class="glyphicon glyphicon-star"></span>
-      <div class="title">{{s.title}}</div>
-      <div class="author">{{s.author.name}}</div>
-      <div class="date">{{s.modificationDate | date}}</div>
-    </h4>
-    <div class="list-group-item-text" ng-show="s.show">
-      <div class="subject-content">{{s.content}}</div>
-    	<div class="btn-group">
-        <button type="button" class="btn btn-danger" ng-hide="s.hasNoState() || s.hasStateForCurrentUser('new')" ng-click="setState('new')">Reset to new</button>
-    	  <button type="button" class="btn btn-success" ng-hide="s.hasStateForCurrentUser('ok')" ng-click="setState('ok')">I know</button>
-    	  <button type="button" class="btn btn-warning" ng-hide="s.hasStateForCurrentUser('what')" ng-click="setState('what')">What ?</button>
+<div>
+
+  <div class="list-group-item" ng-class="{'active':s.show}">
+
+    <!-- editor no enabled -->
+    <div ng-hide="editorEnabled">
+      <h4 class="list-group-item-heading">
+        <div class="title link" ng-click="s.show=!s.show; s.commentShow=s.show"><span class="glyphicon glyphicon-star"></span> {{s.title}}</div>
+        <div class="author">{{s.author.name}}</div>
+        <div class="date">{{s.modificationDate | date}}</div>
+        <span class="badge link" ng-click="s.commentShow=!s.commentShow">{{ s.comments.length }} comments</span>
+      </h4>
+      <div class="list-group-item-text" ng-show="s.show">
+        <div class="subject-content">{{s.content}}</div>
+      	<div class="btn-group">
+          <button type="button" class="btn btn-danger" ng-hide="s.hasNoState() || s.hasStateForCurrentUser('new')" ng-click="setState('new')">Reset to new</button>
+      	  <button type="button" class="btn btn-success" ng-hide="s.hasStateForCurrentUser('ok')" ng-click="setState('ok')">I know</button>
+      	  <button type="button" class="btn btn-warning" ng-hide="s.hasStateForCurrentUser('what')" ng-click="setState('what')">What ?</button>
+        </div>
+        <div class="btn-group pull-right">
+          <button type="button" class="btn btn-default" ng-show="s.author.id==user.id" ng-click="enableEditor()">Edit</button>
+          <button type="button" class="btn btn-danger" ng-show="s.author.id==user.id" ng-click="deleteSubject()">Delete</button>
+      	</div>
       </div>
+    </div>
+
+    <!-- editor enabled -->
+    <div ng-show="editorEnabled">
+      <input class="form-control" ng-model="edit.title">
+      <textarea class="form-control" ng-model="edit.content">{{edit.content}}</textarea>
       <div class="btn-group pull-right">
-        <button type="button" class="btn btn-default" ng-show="s.author.id==user.id" ng-click="enableEditor()">Edit</button>
-        <button type="button" class="btn btn-danger" ng-show="s.author.id==user.id" ng-click="deleteSubject()">Delete</button>
-    	</div>
+        <button type="button" class="btn btn-danger" ng-click="save()">Save</button>
+        <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
+      </div>
+      <p><br></p>
+    </div>
+
+  </div>
+
+  <!-- Comments -->
+  <div class="list-group-item" ng-show="s.commentShow">
+    <div class="list-group-item-text">
+      <ul class="comments">
+        <li ng-repeat="c in s.comments">{{c.text}}
+          <span class="author comment">{{c.author.name}}</span>
+          <span class="date comment">{{c.date | date:"dd-MMM-yyyy HH:mm"}}</span>
+          <button type="button" class="close" aria-hidden="true" ng-show="c.author.id==user.id" ng-click="deleteComment(c)" title="delete">&times;</button>
+        </li>
+      </ul>
+      <form class="form-inline" role="form" ng-submit="addComment()">>
+        <input type="text" class="form-control input-sm" ng-model="comment.text" placeholder="Your comment" required="">
+        <!-- <button type="submit" class="form-control btn btn-default input-sm" ng-click="addComment()">Add</button> -->
+      </form>
     </div>
   </div>
-<!-- editor enabled -->
-  <div ng-show="editorEnabled">
-    <input class="form-control" ng-model="edit.title">
-    <textarea class="form-control" ng-model="edit.content">{{edit.content}}</textarea>
-    <div class="btn-group pull-right">
-      <button type="button" class="btn btn-danger" ng-click="save()">Save</button>
-      <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
-    </div>
-    <p><br></p>
-  </div>
+
 </div>

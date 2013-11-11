@@ -28,8 +28,8 @@
 <div class="list-group" ng-repeat="s in subjects | filter:search | filterStateBy:'what'">
   <subject object="s" user="user">
 </div>
-<h2><span class="label label-success">I know</span></h2>
-<div class="list-group" ng-repeat="s in subjects | filter:search | filterStateBy:'ok'">
+<h2 ng-click="iknowshow=!iknowshow"><span class="label label-success link">I know <span class="badge badge-i-know link">{{ikfiltered.length}}</span></span></h2>
+<div ng-show="iknowshow" class="list-group" ng-repeat="s in ikfiltered = (subjects | filter:search | filterStateBy:'ok')">
   <subject object="s" user="user">
 </div>
 
