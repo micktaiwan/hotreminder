@@ -32,6 +32,24 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
       });
     },
 
+    onAddingSubject: function(callbackSuccess) {
+      subjects_ref.on('child_added', function(snapshot) {
+        safeApply($rootScope, function(){
+          callbackSuccess(snapshot.val());
+          return;
+        });
+      });
+    },
+
+    onDeletingSubject: function(callbackSuccess) {
+      subjects_ref.on('child_removed', function(snapshot) {
+        safeApply($rootScope, function(){
+          callbackSuccess(snapshot.val());
+          return;
+        });
+      });
+    },
+
     getUser: function() {return user;},
 
     setState: function(id, state) {
@@ -47,25 +65,27 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
       var date = (new Date()).getTime();
       if(!content) content = '';
       var states = {} // no associations is done at all
-      subjects_ref.push({creationDate: date, modificationDate: date, title: title, content: content, author: {name: user.name, id: user.id}, states: states});
+      var id = subjects_ref.push().name(); // generate a unique id based on timestamp
+      subjects_ref.child(id).set({id: id, creationDate: date, modificationDate: date, title: title, content: content, author: {name: user.name, id: user.id}, states: states});
     },
 
     deleteSubject : function(id) {
       subjects_ref.child(id).remove();
     },
+
     addComment : function(sid, text) {
+      if(!sid) {console.log("no subject id"); return null;}
       var id = subjects_ref.child(sid).child('comments').push().name(); // generate a unique id based on timestamp
-      subjects_ref.child(sid).child('comments').child(id).set({id: id, text: text, author: {id: user.id, name: user.name}, date: (new Date()).getTime()});
+      var comment = {id: id, text: text, author: {id: user.id, name: user.name}, date: (new Date()).getTime()};
+      subjects_ref.child(sid).child('comments').child(id).set(comment);
+      return comment;
     },
+
     deleteComment : function(sid, cid) {
       subjects_ref.child(sid).child('comments').child(cid).remove();
     },
-    newSubject : function (id, values) {
-      var obj = {};
-      for(var prop in values) {
-        obj[prop] = values[prop];
-      };
-      obj.id = id;
+
+    newSubject : function (obj) { //id, values) {
       obj.hasStateForCurrentUser= function(state) {
           return(this.states && this.states[user.id] && this.states[user.id].state && this.states[user.id].state == state);
         };

@@ -25,12 +25,22 @@ angular.module('hotreminderApp')
       Notification.addNotifications(type, notif);
     };
 
-    Db.getSubjects(function(values) {
-      $scope.subjects = []; // we reinitialize all subjects
+/*    Db.getSubjects(function(values) {
+      $scope.subjects = []; // we reinitialize all subjects (useless if we detach onvalue callback)
       for(var i in values) {
         $scope.subjects.push(Db.newSubject(i, values[i]));
       };
+      dataRef.off('value');
       console.log($scope.subjects.length+' subjects');
+    });
+*/
+    Db.onAddingSubject(function(subject) {
+      $scope.subjects.push(Db.newSubject(subject));
+      console.log("Added " + subject.title);
+    });
+
+    Db.onDeletingSubject(function(subject) {
+      $scope.deleteSubject(subject);
     });
 
     $scope.addSubject = function(title, content) {
@@ -38,5 +48,18 @@ angular.module('hotreminderApp')
       $scope.title    = '';
       $scope.content  = '';
     };
+
+    $scope.getSubjectById = function(id) {
+      $scope.subjects.forEach(function(s) {if(s.id==id) return s});
+      return null;
+    };
+
+    $scope.deleteSubject = function(subject) {
+      var s = $scope.getSubjectById(subject.id);
+      var i = $scope.subjects.indexOf(s);
+      $scope.subjects.splice(i, 1);
+      console.log("Deleted " + subject.title);
+    };
+
 
   });

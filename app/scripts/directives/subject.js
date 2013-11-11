@@ -6,7 +6,7 @@ angular.module("hotreminderApp.directives.subject", ['ui']).directive('subject',
       s: '=object',
       user: '=user',
       changed: '&'
-    },
+      },
     templateUrl : 'views/subject.html',
 
     controller: function($scope) {
@@ -16,13 +16,20 @@ angular.module("hotreminderApp.directives.subject", ['ui']).directive('subject',
         Db.setState($scope.s.id, state);
       };
       $scope.deleteSubject = function() {
-        Db.deleteSubject($scope.s.id);
+        if(!$scope.s.id) console.log('no subject id')
+        else Db.deleteSubject($scope.s.id);
       };
       $scope.addComment = function() {
-        Db.addComment($scope.s.id, $scope.comment.text);
+        var comment = Db.addComment($scope.s.id, $scope.comment.text);
+        $scope.comment.text = "";
+        if(comment) {
+          if(!$scope.s.comments) $scope.s.comments = {};
+          $scope.s.comments[comment.id] = comment;
+        }
       };
       $scope.deleteComment = function(cid) {
-        Db.deleteComment($scope.s.id, cid.id);
+        Db.deleteComment($scope.s.id, cid);
+        delete $scope.s.comments[cid];
       };
     },
 
