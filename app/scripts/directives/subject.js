@@ -31,11 +31,11 @@ angular.module("hotreminderApp.directives.subject", ['ui']).directive('subject',
       $scope.addComment = function() {
         var comment = Db.addComment($scope.s.id, $scope.comment.text);
         $scope.comment.text = "";
-        if(comment) { // adding a comment and will be erased over by the network update
+/*        if(comment) { // adding a comment and will be erased over by the network update
           if(!$scope.s.comments) $scope.s.comments = {};
           comment.text = "(sending) " + comment.text;
           $scope.s.comments[comment.id] = comment;
-        }
+        }*/
       };
       $scope.deleteComment = function(cid) {
         Db.deleteComment($scope.s.id, cid);
