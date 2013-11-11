@@ -18,6 +18,12 @@ angular.module("hotreminderApp.directives.subject", ['ui']).directive('subject',
       $scope.deleteSubject = function() {
         Db.deleteSubject($scope.s.id);
       };
+      $scope.addComment = function() {
+        Db.addComment($scope.s.id, $scope.comment.text);
+      };
+      $scope.deleteComment = function(cid) {
+        Db.deleteComment($scope.s.id, cid.id);
+      };
     },
 
     link: function(scope, element, attrs) {

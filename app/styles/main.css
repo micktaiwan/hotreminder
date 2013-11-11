@@ -47,3 +47,15 @@ body {
 img {border:0;}
 .comments { color: #444;}
 .badge-i-know{background-color:#393; font-size: 0.7em;}
+ul.comments {
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+}
+ul.comments li {
+  padding: 6px;
+  color: #333;
+}
+ul.comments li .author {
+  color: #999;
+}

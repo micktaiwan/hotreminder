@@ -8,7 +8,7 @@
         <div class="title link" ng-click="s.show=!s.show; s.commentShow=s.show"><span class="glyphicon glyphicon-star"></span> {{s.title}}</div>
         <div class="author">{{s.author.name}}</div>
         <div class="date">{{s.modificationDate | date}}</div>
-        <span class="badge link" ng-click="s.commentShow=!s.commentShow">2 comments</span>
+        <span class="badge link" ng-click="s.commentShow=!s.commentShow">{{s.comments.length}} comments</span>
       </h4>
       <div class="list-group-item-text" ng-show="s.show">
         <div class="subject-content">{{s.content}}</div>
@@ -38,12 +38,18 @@
   </div>
 
   <div class="list-group-item" ng-show="s.commentShow">
-    <div class="list-group-item-heading">Comments:</div>
     <div class="list-group-item-text">
       <ul class="comments">
-        <li>Mouais... je comprends pas ! <span class="author">Mickael Faivre-Maçon</span></li>
-        <li>Moi non plus <span class="author">Marc Garabos</span></li>
+        <li ng-repeat="c in s.comments">{{c.text}}
+          <span class="author comment">{{c.author.name}}</span>
+          <span class="date comment">{{c.date | date}}</span>
+          <button type="button" class="close" aria-hidden="true" ng-show="c.author.id==user.id" ng-click="deleteComment(c)" title="delete">&times;</button>
+        </li>
       </ul>
+      <form class="form-inline" role="form" ng-submit="addComment()">>
+        <input type="text" class="form-control input-sm" ng-model="comment.text" placeholder="Your comment" required/>
+        <!-- <button type="submit" class="form-control btn btn-default input-sm" ng-click="addComment()">Add</button> -->
+      </form>
     </div>
   </div>
 
