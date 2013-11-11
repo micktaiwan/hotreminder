@@ -21,8 +21,7 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
     },
 
     getSubjects : function(callbackSuccess) {
-      subjects_ref.off('value');
-      subjects_ref.on('value', function(snapshot) {
+      subjects_ref.once('value', function(snapshot) {
         if(snapshot.val() !== null) {
           safeApply($rootScope, function(){
             callbackSuccess(snapshot.val());
@@ -67,9 +66,11 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
       console.log('Db.addSubject '+ title + ", " + content);
       var date = (new Date()).getTime();
       if(!content) content = '';
-      var states = {} // no associations is done at all
+      var states = {}
+      var comments = {}
       var id = subjects_ref.push().name(); // generate a unique id based on timestamp
-      subjects_ref.child(id).set({id: id, creationDate: date, modificationDate: date, title: title, content: content, author: {name: user.name, id: user.id}, states: states});
+      subjects_ref.child(id).set({id: id, comments: comments, creationDate: date, modificationDate: date, title: title, content: content, author: {name: user.name, id: user.id}, states: states});
+      return id;
     },
 
     deleteSubject : function(id) {
@@ -88,13 +89,23 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
       subjects_ref.child(sid).child('comments').child(cid).remove();
     },
 
-    newSubject : function (obj) { //id, values) {
+    newSubject : function (obj, callbackForAddingComment) {
+      var comments_ref = new Firebase(CONFIG.firebaseUrl + '/subjects/'+obj.id+'/comments');
+      comments_ref.on('child_added', function(snapshot) {
+        safeApply($rootScope, function(){
+          callbackForAddingComment(obj.id, snapshot.val());
+          return;
+        });
+      });
+
       obj.hasStateForCurrentUser= function(state) {
           return(this.states && this.states[user.id] && this.states[user.id].state && this.states[user.id].state == state);
         };
+
       obj.hasNoState= function() {
           return(!this.states || !this.states[user.id] || !this.states[user.id].state);
         };
+
       return obj;
     },
 
