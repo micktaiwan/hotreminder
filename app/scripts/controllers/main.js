@@ -26,6 +26,7 @@ angular.module('hotreminderApp')
     }
 
     $scope.subjects = [];
+    $scope.lastUpdates = [];
     $scope.user = u;
 
     var getSubjectById = function(id) {
@@ -62,6 +63,13 @@ angular.module('hotreminderApp')
       console.log($scope.subjects.length+' subjects');
     });
 */
+    Db.getLastUpdates(function(values) {
+      $scope.lastUpdates = [];
+      for(var i in values) {
+        $scope.lastUpdates.push(values[i]);
+      };
+      console.log($scope.lastUpdates.length+' updates');
+    });
 
     Db.onAddingSubject(function(subject) {
       console.log("Received subject " + subject.title + ' (' + subject.id + ')');

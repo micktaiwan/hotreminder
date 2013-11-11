@@ -6,6 +6,7 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
 
   var subjects    = [];
   var subjects_ref = new Firebase(CONFIG.firebaseUrl + '/subjects');
+  var lastupdates_ref = new Firebase(CONFIG.firebaseUrl + '/lastupdates');
   console.log("Connected to subjects db. Ref: " + subjects_ref);
 
   function safeApply(scope, fn) {
@@ -29,6 +30,18 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
           });
         }
         else { console.log('no values in DB'); }
+      });
+    },
+
+    getLastUpdates : function(callbackSuccess) {
+      lastupdates_ref.on('value', function(snapshot) {
+        if(snapshot.val() !== null) {
+          safeApply($rootScope, function(){
+            callbackSuccess(snapshot.val());
+            return;
+          });
+        }
+        else { console.log('no lastupdates in DB'); }
       });
     },
 
@@ -68,24 +81,50 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
       if(!content) content = '';
       var states = {}
       var comments = {}
+      var author = {name: user.name, id: user.id};
+
       var id = subjects_ref.push().name(); // generate a unique id based on timestamp
-      subjects_ref.child(id).set({id: id, comments: comments, creationDate: date, modificationDate: date, title: title, content: content, author: {name: user.name, id: user.id}, states: states});
+      subjects_ref.child(id).set({id: id, comments: comments, creationDate: date, modificationDate: date, title: title, content: content, author: author, states: states});
+      var lu_id = lastupdates_ref.push().name(); // generate a unique id based on timestamp
+      lastupdates_ref.child(lu_id).set({id: lu_id, date: date, text: author.name+' added subject '+title, author: author, ref: "subjects", action: "add", object_id: id});
       return id;
     },
 
     deleteSubject : function(id) {
-      subjects_ref.child(id).remove();
+      var author = {id: user.id, name: user.name};
+      var date = (new Date()).getTime();
+      var ref = subjects_ref.child(id);
+      ref.once('value', function(s) {
+        var lu_id = lastupdates_ref.push().name(); // generate a unique id based on timestamp
+        lastupdates_ref.child(lu_id).set({id: lu_id, date: date, text: author.name+' deleted subject '+s.val().title, author: author, ref: "subjects", action: "delete", object_id: id});
+        subjects_ref.child(id).remove();
+      });
     },
 
     addComment : function(sid, text) {
       if(!sid) {console.log("no subject id"); return null;}
+      var author = {id: user.id, name: user.name};
+      var date = (new Date()).getTime();
       var id = subjects_ref.child(sid).child('comments').push().name(); // generate a unique id based on timestamp
-      var comment = {id: id, text: text, author: {id: user.id, name: user.name}, date: (new Date()).getTime()};
+      var comment = {id: id, text: text, author: author, date: date};
       subjects_ref.child(sid).child('comments').child(id).set(comment);
+
+      var ref = subjects_ref.child(sid);
+      ref.once('value', function(s) {
+        var lu_id = lastupdates_ref.push().name(); // generate a unique id based on timestamp
+        lastupdates_ref.child(lu_id).set({id: lu_id, date: date, text: author.name+' commented on '+s.val().title, author: author, ref: "comments", action: "add", object_id: id, parent_id: sid});
+      });
       return comment;
     },
 
     deleteComment : function(sid, cid) {
+      var author = {id: user.id, name: user.name};
+      var date = (new Date()).getTime();
+      var ref = subjects_ref.child(sid);
+      ref.once('value', function(s) {
+        var lu_id = lastupdates_ref.push().name(); // generate a unique id based on timestamp
+        lastupdates_ref.child(lu_id).set({id: lu_id, date: date, text: author.name+' deleted a comment on '+s.val().title, author: author, ref: "comments", action: "delete", object_id: cid, parent_id: sid});
+      });
       subjects_ref.child(sid).child('comments').child(cid).remove();
     },
 
