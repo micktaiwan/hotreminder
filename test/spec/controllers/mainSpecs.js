@@ -6,12 +6,12 @@ describe('Controller: MainCtrl', function () {
   beforeEach(module('hotreminderApp'));
 
   var MainCtrl,
-    scope;
+      scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
-    scope = $rootScope.$new();
-    MainCtrl = $controller('MainCtrl', {
+    scope     = $rootScope.$new();
+    MainCtrl  = $controller('MainCtrl', {
       $scope: scope
     });
   }));

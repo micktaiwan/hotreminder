@@ -8,7 +8,7 @@
         <div class="title link" ng-click="s.show=!s.show; s.showComments=s.show"><span class="glyphicon glyphicon-star"></span> {{s.title}}</div>
         <div class="author">{{s.author.name}}</div>
         <div class="date">{{s.modificationDate | date}}</div>
-        <span class="badge link" ng-click="s.showComments=!s.showComments">{{ s.comments.length }} comments</span>
+        <span class="badge link" ng-click="s.showComments=!s.showComments">{{ s.comments.length }} comments</span> <!-- FIXME -->
         <div class="alert alert-sm alert-danger pull-right" ng-hide="s.id">No id!</div>
       </h4>
       <div class="list-group-item-text" ng-show="s.show">

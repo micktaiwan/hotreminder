@@ -8,7 +8,7 @@ angular.module('hotreminderApp', [
     'hotreminderApp.directives.focusOn',
     'google'
     ])
-  .config(function ($routeProvider) {
+  .config(['$routeProvider', function ($routeProvider) { // or directly config(function ($routeProvider) {
     $routeProvider
       .when('/main', {
         templateUrl: 'views/main.html',
@@ -29,4 +29,4 @@ angular.module('hotreminderApp', [
       .otherwise({
         redirectTo: '/main'
       });
-  });
+  }]);
