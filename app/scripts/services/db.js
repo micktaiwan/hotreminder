@@ -86,7 +86,7 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
       var id = subjects_ref.push().name(); // generate a unique id based on timestamp
       subjects_ref.child(id).set({id: id, comments: comments, creationDate: date, modificationDate: date, title: title, content: content, author: author, states: states});
       var lu_id = lastupdates_ref.push().name(); // generate a unique id based on timestamp
-      lastupdates_ref.child(lu_id).set({id: lu_id, date: date, text: author.name+' added subject '+title, author: author, ref: "subjects", action: "add", object_id: id});
+      lastupdates_ref.child(lu_id).set({id: lu_id, date: date, text: 'added subject '+title, author: author, ref: "subjects", action: "add", object_id: id});
       return id;
     },
 
@@ -96,7 +96,7 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
       var ref = subjects_ref.child(id);
       ref.once('value', function(s) {
         var lu_id = lastupdates_ref.push().name(); // generate a unique id based on timestamp
-        lastupdates_ref.child(lu_id).set({id: lu_id, date: date, text: author.name+' deleted subject '+s.val().title, author: author, ref: "subjects", action: "delete", object_id: id});
+        lastupdates_ref.child(lu_id).set({id: lu_id, date: date, text:'deleted subject '+s.val().title, author: author, ref: "subjects", action: "delete", object_id: id});
         subjects_ref.child(id).remove();
       });
     },
@@ -112,7 +112,7 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
       var ref = subjects_ref.child(sid);
       ref.once('value', function(s) {
         var lu_id = lastupdates_ref.push().name(); // generate a unique id based on timestamp
-        lastupdates_ref.child(lu_id).set({id: lu_id, date: date, text: author.name+' commented on '+s.val().title, author: author, ref: "comments", action: "add", object_id: id, parent_id: sid});
+        lastupdates_ref.child(lu_id).set({id: lu_id, date: date, text: 'commented on '+s.val().title, author: author, ref: "comments", action: "add", object_id: id, parent_id: sid});
       });
       return comment;
     },
@@ -123,7 +123,7 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
       var ref = subjects_ref.child(sid);
       ref.once('value', function(s) {
         var lu_id = lastupdates_ref.push().name(); // generate a unique id based on timestamp
-        lastupdates_ref.child(lu_id).set({id: lu_id, date: date, text: author.name+' deleted a comment on '+s.val().title, author: author, ref: "comments", action: "delete", object_id: cid, parent_id: sid});
+        lastupdates_ref.child(lu_id).set({id: lu_id, date: date, text: 'deleted a comment on '+s.val().title, author: author, ref: "comments", action: "delete", object_id: cid, parent_id: sid});
       });
       subjects_ref.child(sid).child('comments').child(cid).remove();
     },

@@ -61,8 +61,11 @@ ul.comments li .author {
 }
 ul.lastupdates {
   list-style-type: none;
-  padding: 0px;
+  padding: 2px;
   margin: 0px;
+  border: 1px #BBB solid;
+  border-radius:10px;
+  background-color: #CDE;
 }
 ul.lastupdates li {
   padding: 4px;
@@ -70,7 +73,7 @@ ul.lastupdates li {
   font-size: 0.7em;
 }
 ul.lastupdates li .author {
-  color: #999;
+  color: #05F;
 }
 .alert.alert-sm {
   padding: 3px;

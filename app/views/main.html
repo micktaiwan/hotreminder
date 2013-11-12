@@ -44,7 +44,7 @@
   <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
     Last updates:
     <ul class="lastupdates">
-      <li ng-repeat="u in lastUpdates | orderBy:'-date'">{{ u.text }} {{ u.date | date:'dd/MM HH:mm' }}</li>
+      <li ng-repeat="u in lastUpdates | orderBy:'-date'"><b>{{ u.date | date:'dd/MM HH:mm' }}</b> <span class="author">{{ u.author.name | limitTo:15 }}</span> {{ u.text }}</li>
     </ul>
   </div>
 </div>
