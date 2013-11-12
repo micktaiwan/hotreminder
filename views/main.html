@@ -1,36 +1,52 @@
-<div class="form-group" ng-hide="form_show">
-  <button class="btn btn-primary" ng-click="form_show=true">Add reminder</button>
-</div>
+<div class="row row-offcanvas row-offcanvas-right">
+  <div class="col-xs-12 col-sm-9">
+    <p class="pull-right visible-xs">
+      <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Last updates</button>
+    </p>
 
-<form name="add_form" ng-submit="addSubject(title, content)" role="form" ng-show="form_show">
+    <div class="form-group" ng-hide="form_show">
+      <button class="btn btn-primary" ng-click="form_show=true">Add reminder</button>
+    </div>
 
-  <div class="form-group">
-    <label class="control-label sr-only" for="title">Title</label>
-    <input ng-model="title" type="text" class="form-control" id="title" placeholder="Reminder title" required="" focus-on="title==''">
+    <form name="add_form" ng-submit="addSubject(title, content)" role="form" ng-show="form_show">
+
+      <div class="form-group">
+        <label class="control-label sr-only" for="title">Title</label>
+        <input ng-model="title" type="text" class="form-control" id="title" placeholder="Reminder title" required="" focus-on="title==''">
+      </div>
+
+      <div class="form-group">
+        <label class="control-label sr-only" for="content">Explanations</label>
+        <textarea ng-model="content" class="form-control" id="content" placeholder="Explanations"></textarea>
+      </div>
+
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Add reminder</button>
+        <button type="button" class="btn btn-default" ng-click="form_show=false">Close</button>
+      </div>
+    </form>
+
+    <h2><span class="label label-danger">New</span></h2>
+    <div class="list-group" ng-repeat="s in subjects | filter:search | filterStateBy:'new'">
+      <subject object="s" user="user">
+    </div>
+    <h2><span class="label label-warning">What?</span></h2>
+    <div class="list-group" ng-repeat="s in subjects | filter:search | filterStateBy:'what'">
+      <subject object="s" user="user">
+    </div>
+    <h2 ng-click="iknowshow=!iknowshow"><span class="label label-success link">I know <span class="badge badge-i-know link">{{ikfiltered.length}}</span></span></h2>
+    <div ng-show="iknowshow" class="list-group" ng-repeat="s in ikfiltered = (subjects | filter:search | filterStateBy:'ok')">
+      <subject object="s" user="user">
+    </div>
   </div>
 
-  <div class="form-group">
-    <label class="control-label sr-only" for="content">Explanations</label>
-    <textarea ng-model="content" class="form-control" id="content" placeholder="Explanations"></textarea>
+  <!-- Last updates -->
+  <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+    Last updates:
+    <ul class="lastupdates">
+      <li ng-repeat="u in lastUpdates | orderBy:'-date'"><b>{{ u.date | date:'dd/MM HH:mm' }}</b> <span class="author">{{ u.author.name | limitTo:15 }}</span> {{ u.text }}</li>
+    </ul>
   </div>
-
-  <div class="form-group">
-    <button type="submit" class="btn btn-primary">Add reminder</button>
-    <button type="button" class="btn btn-default" ng-click="form_show=false">Close</button>
-  </div>
-</form>
-
-<h2><span class="label label-danger">New</span></h2>
-<div class="list-group" ng-repeat="s in subjects | filter:search | filterStateBy:'new'">
-  <subject object="s" user="user">
-</div>
-<h2><span class="label label-warning">What?</span></h2>
-<div class="list-group" ng-repeat="s in subjects | filter:search | filterStateBy:'what'">
-  <subject object="s" user="user">
-</div>
-<h2 ng-click="iknowshow=!iknowshow"><span class="label label-success link">I know <span class="badge badge-i-know link">{{ikfiltered.length}}</span></span></h2>
-<div ng-show="iknowshow" class="list-group" ng-repeat="s in ikfiltered = (subjects | filter:search | filterStateBy:'ok')">
-  <subject object="s" user="user">
 </div>
 
 <script>
