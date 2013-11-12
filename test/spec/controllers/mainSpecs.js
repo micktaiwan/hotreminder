@@ -25,6 +25,6 @@ describe('Controller: MainCtrl', function () {
   });
 
   it('should not have any subjects at start', function () {
-    expect(scope.subjects).toBe([]);
+    expect(scope.subjects.length).toBe(0);
   });
 });

@@ -19,14 +19,16 @@ angular.module('hotreminderApp')
       return $rootScope.iterate(obj[props[index]], props, index+1);
     };
 */
+    $scope.user = null;
+    $scope.subjects = [];
+    $scope.lastUpdates = [];
+
     var u = Google.getUser();
     if(!u || !u.id ) {
       $location.path('/');
       return;
     }
 
-    $scope.subjects = [];
-    $scope.lastUpdates = [];
     $scope.user = u;
 
     var getSubjectById = function(id) {
