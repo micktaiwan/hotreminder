@@ -57,14 +57,16 @@ angular.module('hotreminderApp')
       Notification.addNotifications(type, notif);
     };
 
-/*    Db.getSubjects(function(values) {
+    $scope.getSubjectsCallback = function (values) {
       $scope.subjects = []; // we reinitialize all subjects (useless if we detach onvalue callback)
       for(var i in values) {
         $scope.subjects.push(Db.newSubject(values[i], onCommentAdded));
       };
       console.log($scope.subjects.length+' subjects');
-    });
-*/
+    }
+
+    // Db.getSubjects($scope.getSubjectsCallback);
+
     Db.getLastUpdates(function(values) {
       $scope.lastUpdates = [];
       for(var i in values) {

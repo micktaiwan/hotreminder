@@ -2,11 +2,18 @@
 
 angular.module('hotreminderApp.services.db', []).factory('Db', function($rootScope, $location) {
 
+
+  throw("on devrait pas refaire tout le service de DB, sinon on ne le test pas !!!!");
+
   var user;
 
   var subjects    = [];
-  var DATA        = {};
-  console.log("mocking firebase");
+  var DATA_SUBJECTS = {
+    1: {title: 'test'}
+  };
+  var DATA_LASTUPDATES = {
+    1: {text: 'test'}
+  };
 
   function safeApply(scope, fn) {
     (scope.$$phase || scope.$root.$$phase) ? fn() : scope.$apply(fn);
@@ -22,55 +29,47 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
 
     getSubjects : function(callbackSuccess) {
       safeApply($rootScope, function() {
-        callbackSuccess(DATA);
+        callbackSuccess(DATA_SUBJECTS);
         return;
       });
     },
 
     getLastUpdates : function(callbackSuccess) {
-      lastupdates_ref.on('value', function(snapshot) {
-        if(snapshot.val() !== null) {
-          safeApply($rootScope, function(){
-            callbackSuccess(snapshot.val());
-            return;
-          });
-        }
-        else { console.log('no lastupdates in DB'); }
+      safeApply($rootScope, function() {
+        callbackSuccess(DATA_LASTUPDATES);
+        return;
       });
     },
 
     onAddingSubject: function(callbackSuccess) {
-      subjects_ref.off('child_added');
-      subjects_ref.on('child_added', function(snapshot) {
-        safeApply($rootScope, function(){
-          callbackSuccess(snapshot.val());
-          return;
-        });
+      safeApply($rootScope, function() {
+        callbackSuccess({title: 'test'});
+        return;
       });
     },
 
     onDeletingSubject: function(callbackSuccess) {
-      subjects_ref.off('child_removed');
+/*      subjects_ref.off('child_removed');
       subjects_ref.on('child_removed', function(snapshot) {
         safeApply($rootScope, function(){
           callbackSuccess(snapshot.val());
           return;
         });
-      });
+      });*/
     },
 
     getUser: function() {return user;},
 
     setState: function(id, state) {
-      subjects_ref.child(id).child('states').child(user.id).update({state : state});
+      //subjects_ref.child(id).child('states').child(user.id).update({state : state});
       },
 
     edit: function(id, obj) {
-      subjects_ref.child(id).update(obj);
+      //subjects_ref.child(id).update(obj);
       },
 
     addSubject : function(title, content) {
-      console.log('Db.addSubject '+ title + ", " + content);
+/*      console.log('Db.addSubject '+ title + ", " + content);
       var date = (new Date()).getTime();
       if(!content) content = '';
       var states = {}
@@ -81,22 +80,22 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
       subjects_ref.child(id).set({id: id, comments: comments, creationDate: date, modificationDate: date, title: title, content: content, author: author, states: states});
       var lu_id = lastupdates_ref.push().name(); // generate a unique id based on timestamp
       lastupdates_ref.child(lu_id).set({id: lu_id, date: date, text: 'added subject '+title, author: author, ref: "subjects", action: "add", object_id: id});
-      return id;
+      return id;*/
     },
 
     deleteSubject : function(id) {
-      var author = {id: user.id, name: user.name};
+/*      var author = {id: user.id, name: user.name};
       var date = (new Date()).getTime();
       var ref = subjects_ref.child(id);
       ref.once('value', function(s) {
         var lu_id = lastupdates_ref.push().name(); // generate a unique id based on timestamp
         lastupdates_ref.child(lu_id).set({id: lu_id, date: date, text:'deleted subject '+s.val().title, author: author, ref: "subjects", action: "delete", object_id: id});
         subjects_ref.child(id).remove();
-      });
+      });*/
     },
 
     addComment : function(sid, text) {
-      if(!sid) {console.log("no subject id"); return null;}
+/*      if(!sid) {console.log("no subject id"); return null;}
       var author = {id: user.id, name: user.name};
       var date = (new Date()).getTime();
       var id = subjects_ref.child(sid).child('comments').push().name(); // generate a unique id based on timestamp
@@ -108,22 +107,22 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
         var lu_id = lastupdates_ref.push().name(); // generate a unique id based on timestamp
         lastupdates_ref.child(lu_id).set({id: lu_id, date: date, text: 'commented on '+s.val().title, author: author, ref: "comments", action: "add", object_id: id, parent_id: sid});
       });
-      return comment;
+      return comment;*/
     },
 
     deleteComment : function(sid, cid) {
-      var author = {id: user.id, name: user.name};
+/*      var author = {id: user.id, name: user.name};
       var date = (new Date()).getTime();
       var ref = subjects_ref.child(sid);
       ref.once('value', function(s) {
         var lu_id = lastupdates_ref.push().name(); // generate a unique id based on timestamp
         lastupdates_ref.child(lu_id).set({id: lu_id, date: date, text: 'deleted a comment on '+s.val().title, author: author, ref: "comments", action: "delete", object_id: cid, parent_id: sid});
       });
-      subjects_ref.child(sid).child('comments').child(cid).remove();
+      subjects_ref.child(sid).child('comments').child(cid).remove();*/
     },
 
     newSubject : function (obj, callbackForAddingComment) {
-      var comments_ref = new Firebase(CONFIG.firebaseUrl + '/subjects/'+obj.id+'/comments');
+/*      var comments_ref = new Firebase(CONFIG.firebaseUrl + '/subjects/'+obj.id+'/comments');
       comments_ref.on('child_added', function(snapshot) {
         safeApply($rootScope, function(){
           callbackForAddingComment(obj.id, snapshot.val());
@@ -131,7 +130,7 @@ angular.module('hotreminderApp.services.db', []).factory('Db', function($rootSco
         });
       });
 
-      obj.hasStateForCurrentUser= function(state) {
+*/      obj.hasStateForCurrentUser= function(state) {
           return(this.states && this.states[user.id] && this.states[user.id].state && this.states[user.id].state == state);
         };
 
